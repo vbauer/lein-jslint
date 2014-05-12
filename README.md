@@ -22,6 +22,7 @@ To enable lein-jslint for your project, put the following in the *:plugins* vect
 
 ![latest-version](https://clojars.org/lein-jslint/latest-version.svg)
 
+[![Build Status](https://travis-ci.org/vbauer/lein-jslint.svg?branch=master)](https://travis-ci.org/vbauer/lein-jslint)
 [![Dependencies Status](http://jarkeeper.com/vbauer/lein-jslint/status.png)](http://jarkeeper.com/vbauer/lein-jslint)
 
 To enable this plugin in compile stage, use the following hook:
