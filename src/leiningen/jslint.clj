@@ -58,14 +58,9 @@
 (defn- sources-list [project args]
   (let [includes (include-files project)
         sources (remove empty? (concat (apply vec args) includes))
-        excludes (apply hash-set (exclude-files project))
-        target (remove (fn [x] (or (empty? x)
-                                   (contains? excludes x))) sources)]
-    (if (empty? target)
-      (do
-        (println "No JS files specified.")
-        (main/abort))
-      target)))
+        excludes (apply hash-set (exclude-files project))]
+    (remove (fn [x] (or (empty? x)
+                        (contains? excludes x))) sources)))
 
 (defn- invoke [project & args]
   (process/exec
@@ -78,8 +73,10 @@
     (let [file (config-file project)
           content (generate-config-file project)
           sources (sources-list project args)]
-      (npm/with-json-file file content project
-                          (apply invoke project sources)))
+      (if (empty? sources)
+        (println "No JS files specified.")
+        (npm/with-json-file file content project
+                            (apply invoke project sources))))
     (catch Throwable t
       (println
        (joine (str "Can't execute jslint application: " (.getMessage t))

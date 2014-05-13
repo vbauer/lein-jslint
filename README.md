@@ -42,7 +42,12 @@ You can specify where JS files will be located with:
 }
 ```
 
-To specify *:includes* option it is possible to use <a href="http://en.wikipedia.org/wiki/Glob_(programming)">Glob Patterns</a>.
+You can also specify JS files that should be excluded from checking:
+```clojure
+:jslint { :excludes ["resources/public/lib/*.js"] }
+```
+
+To specify *:includes* and *:excludes* options it is possible to use <a href="http://en.wikipedia.org/wiki/Glob_(programming)">Glob Patterns</a>.
 
 JSLint rules could be configured with *:config* parameter:
 ```clojure
