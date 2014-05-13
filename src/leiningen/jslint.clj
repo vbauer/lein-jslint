@@ -2,6 +2,7 @@
   leiningen.jslint
   (:require [leiningen.npm :as npm]
             [leiningen.npm.process :as process]
+            [leiningen.core.main :as main]
             [leiningen.help :as help]
             [leiningen.compile]
             [cheshire.core :as json]
@@ -19,6 +20,9 @@
   (doto (io/file file)
     (spit content)
     (.deleteOnExit)))
+
+(defn joine [& data]
+  (string/join "\r\n" data))
 
 
 ; Internal API: Configuration
@@ -56,12 +60,20 @@
    (cons "jslint" args)))
 
 (defn- proc [project]
-  (npm/environmental-consistency project)
-  (let [file (config-file project)
-        content (generate-config-file project)
-        includes (include-files project)]
-    (npm/with-json-file file content project
-                        (apply invoke project includes))))
+  (try
+    (npm/environmental-consistency project)
+    (let [file (config-file project)
+          content (generate-config-file project)
+          includes (include-files project)]
+      (npm/with-json-file file content project
+                          (apply invoke project includes)))
+    (catch Throwable t
+      (println (joine "Can't execute jslint application."
+                      "Check that JSLint is:"
+                      " - installed correctly: npm install jslint -g"
+                      " - configured correctly: https://github.com/vbauer/lein-jslint.git"))
+      (main/abort))))
+
 
 
 ; External API: Tasks
