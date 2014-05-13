@@ -68,7 +68,7 @@
       (npm/with-json-file file content project
                           (apply invoke project includes)))
     (catch Throwable t
-      (println (joine "Can't execute jslint application."
+      (println (joine (str "Can't execute jslint application: " (.getMessage t))
                       "Check that JSLint is:"
                       " - installed correctly: npm install jslint -g"
                       " - configured correctly: https://github.com/vbauer/lein-jslint.git"))
