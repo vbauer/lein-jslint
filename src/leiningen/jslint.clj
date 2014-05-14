@@ -79,7 +79,7 @@
                             (apply invoke project sources))))
     (catch Throwable t
       (println
-       (joine (str "Can't execute jslint application: " (.getMessage t))
+       (joine (str "Can't execute JSLint: " (.getMessage t))
               "Something is wrong:"
               " - installation: npm install jslint -g"
               " - configuration: https://github.com/vbauer/lein-jslint"))
