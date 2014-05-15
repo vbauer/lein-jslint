@@ -3,7 +3,7 @@ lein-jslint
 
 A Leiningen plugin for running javascript code through JSLint.
 
-It helps to detect errors and potential problems in your JavaScript code and based on [JSLint](https://github.com/reid/node-jslint).
+It helps to detect errors and potential problems in your JavaScript code and is based on [JSLint](https://github.com/reid/node-jslint).
 
 
 Pre-requirements
@@ -34,7 +34,7 @@ To enable this plugin in compile stage, use the following hook:
 Configuration
 =============
 
-You can specify where JS files will be located with:
+You can specify places, where JS files will be located with:
 ```clojure
 :jslint {
   :includes ["resources/public/js/*.js"
@@ -47,7 +47,7 @@ You can also specify JS files that should be excluded from checking:
 :jslint { :excludes ["resources/public/lib/*.js"] }
 ```
 
-To specify *:includes* and *:excludes* options it is possible to use <a href="http://en.wikipedia.org/wiki/Glob_(programming)">Glob Patterns</a>.
+To specify *:includes* and *:excludes* options, it is possible to use <a href="http://en.wikipedia.org/wiki/Glob_(programming)">Glob Patterns</a>.
 
 JSLint rules could be configured with *:config* parameter:
 ```clojure
