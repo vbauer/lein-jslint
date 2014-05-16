@@ -27,6 +27,8 @@
 
 ; Internal API: Configuration
 
+(def ^:private DEF_JSLINT_CMD "jshint")
+(def ^:private DEF_JSLINT_DIR "node_modules/jslint/bin/")
 (def ^:private DEF_CONFIG_FILE ".jslintrc")
 (def ^:private DEF_CONFIG
   {:confusion    true
@@ -63,9 +65,10 @@
                         (contains? excludes x))) sources)))
 
 (defn- invoke [project & args]
-  (process/exec
-   (project :root)
-   (cons "jslint" args)))
+  (let [root (:root project)
+        local (str DEF_JSLINT_DIR DEF_JSLINT_CMD)
+        cmd (if (.exists (io/file local)) local DEF_JSLINT_CMD)]
+    (process/exec root (cons cmd args))))
 
 (defn- proc [project & args]
   (try
@@ -73,8 +76,7 @@
     (let [file (config-file project)
           content (generate-config-file project)
           sources (sources-list project args)]
-      (if (empty? sources)
-        (println "No JS files specified.")
+      (if-not (empty? sources)
         (npm/with-json-file file content project
                             (apply invoke project sources))))
     (catch Throwable t
@@ -93,15 +95,5 @@
   "Invoke the JSLint, Static analysis tool for JavaScript"
   [project & args]
   (if (= args ["help"])
-    (println (help/help-for "jslint"))
+    (println (help/help-for DEF_JSLINT_CMD))
     (proc project args)))
-
-
-; External API: Hooks
-
-(defn check-hook [f & args]
-  (apply f args)
-  (proc (first args)))
-
-(defn activate []
-  (hooke/add-hook #'leiningen.compile/compile #'check-hook))

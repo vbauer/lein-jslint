@@ -9,25 +9,51 @@ It helps to detect errors and potential problems in your JavaScript code and is 
 Pre-requirements
 ================
 
-Install [JSLint](https://www.npmjs.org/package/jslint) to use lein-jslint plugin:
+Install [NodeJS](http://nodejs.org/) and [NPM](https://github.com/npm/npm) (package manager for Node) to install JSHint:
+
+On Ubuntu:
 ```
-npm install jslint -g
+sudo apt-get install nodejs
+```
+On Mac OS X:
+```
+brew install node
 ```
 
 
 Installation
 ============
 
-To enable lein-jslint for your project, put the following in the *:plugins* vector of your project.clj file:
+
+To enable lein-jslint for your project, put the following in the :plugins vector of your project.clj file:
 
 ![latest-version](https://clojars.org/lein-jslint/latest-version.svg)
 
 [![Build Status](https://travis-ci.org/vbauer/lein-jslint.svg?branch=master)](https://travis-ci.org/vbauer/lein-jslint)
 [![Dependencies Status](http://jarkeeper.com/vbauer/lein-jslint/status.png)](http://jarkeeper.com/vbauer/lein-jslint)
 
+Install [JSLint](https://www.npmjs.org/package/jslint) to use lein-jslint plugin. It could be done in few ways:
+
+- Use NPM to install JSLint globally:
+```
+npm install jslint -g
+```
+- You can also install JSLint in the current directory:
+```
+npm install jslint
+```
+- Use [lein-npm](https://github.com/bodil/lein-npm) plugin:
+```
+lein npm install
+```
+- Use just Leiningen:
+```
+lein deps
+```
+
 To enable this plugin in compile stage, use the following hook:
 ```clojure
-:hooks [leiningen.jslint]
+:hooks [lein-jslint.plugin]
 ```
 
 
