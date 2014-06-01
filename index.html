@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>lein-jslint by vbauer</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>lein-jslint</h1>
+        <p>A Leiningen plugin for running javascript code through JSLint</p>
+
+        <p class="view"><a href="https://github.com/vbauer/lein-jslint">View the Project on GitHub <small>vbauer/lein-jslint</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/vbauer/lein-jslint/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/vbauer/lein-jslint/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/vbauer/lein-jslint">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="lein-jslint" class="anchor" href="#lein-jslint"><span class="octicon octicon-link"></span></a>lein-jslint</h1>
+
+<p>A Leiningen plugin for running javascript code through JSLint.</p>
+
+<p>It helps to detect errors and potential problems in your JavaScript code and is based on <a href="https://github.com/reid/node-jslint">JSLint</a>.</p>
+
+<h1>
+<a name="pre-requirements" class="anchor" href="#pre-requirements"><span class="octicon octicon-link"></span></a>Pre-requirements</h1>
+
+<p>Install <a href="http://nodejs.org/">NodeJS</a> and <a href="https://github.com/npm/npm">NPM</a> (package manager for Node) to install JSHint:</p>
+
+<p>On Ubuntu:</p>
+
+<pre><code>sudo apt-get install nodejs
+</code></pre>
+
+<p>On Mac OS X:</p>
+
+<pre><code>brew install node
+</code></pre>
+
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>To enable lein-jslint for your project, put the following in the :plugins vector of your project.clj file:</p>
+
+<p><img src="https://clojars.org/lein-jslint/latest-version.svg" alt="latest-version"></p>
+
+<p><a href="https://travis-ci.org/vbauer/lein-jslint"><img src="https://travis-ci.org/vbauer/lein-jslint.svg?branch=master" alt="Build Status"></a>
+<a href="http://jarkeeper.com/vbauer/lein-jslint"><img src="http://jarkeeper.com/vbauer/lein-jslint/status.png" alt="Dependencies Status"></a></p>
+
+<p>Install <a href="https://www.npmjs.org/package/jslint">JSLint</a> to use lein-jslint plugin. It could be done in few ways:</p>
+
+<ul>
+<li>Use NPM to install JSLint globally:</li>
+</ul><pre><code>npm install jslint -g
+</code></pre>
+
+<ul>
+<li>You can also install JSLint in the current directory:</li>
+</ul><pre><code>npm install jslint
+</code></pre>
+
+<ul>
+<li>Use <a href="https://github.com/bodil/lein-npm">lein-npm</a> plugin:</li>
+</ul><pre><code>lein npm install
+</code></pre>
+
+<ul>
+<li>Use just Leiningen:</li>
+</ul><pre><code>lein deps
+</code></pre>
+
+<p>To enable this plugin in compile stage, use the following hook:</p>
+
+<div class="highlight highlight-clojure"><pre><span class="ss">:hooks</span> <span class="p">[</span><span class="nv">lein-jslint.plugin</span><span class="p">]</span>
+</pre></div>
+
+<h1>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h1>
+
+<p>You can specify places, where JS files will be located with:</p>
+
+<div class="highlight highlight-clojure"><pre><span class="ss">:jslint</span> <span class="p">{</span>
+  <span class="ss">:includes</span> <span class="p">[</span><span class="s">"resources/public/js/*.js"</span>
+             <span class="s">"resources/js/*.js"</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>You can also specify JS files that should be excluded from checking:</p>
+
+<div class="highlight highlight-clojure"><pre><span class="ss">:jslint</span> <span class="p">{</span> <span class="ss">:excludes</span> <span class="p">[</span><span class="s">"resources/public/lib/*.js"</span><span class="p">]</span> <span class="p">}</span>
+</pre></div>
+
+<p>To specify <em>:includes</em> and <em>:excludes</em> options, it is possible to use <a href="http://en.wikipedia.org/wiki/Glob_(programming)">Glob Patterns</a>.</p>
+
+<p>JSLint rules could be configured with <em>:config</em> parameter:</p>
+
+<div class="highlight highlight-clojure"><pre><span class="c1">; It specifies which JSLint options to turn on or off</span>
+<span class="ss">:jslint</span> <span class="p">{</span>
+  <span class="ss">:config</span> <span class="p">{</span><span class="ss">:predef</span> <span class="p">{</span><span class="s">"angular"</span> <span class="s">"console"</span> <span class="s">"$"</span><span class="p">}</span>
+           <span class="ss">:nomen</span> <span class="nv">true</span>
+           <span class="ss">:es5</span> <span class="nv">true</span>
+           <span class="ss">:eqeq</span> <span class="nv">true</span>
+           <span class="nv">...</span><span class="p">}}</span>
+</pre></div>
+
+<p>You can use both variants to specify keys: string values or keywords.</p>
+
+<p>All available parameters are described in the official documentation here: <a href="http://www.jslint.com/lint.html">http://www.jslint.com/lint.html</a></p>
+
+<p>Configuration example:</p>
+
+<div class="highlight highlight-clojure"><pre><span class="ss">:jslint</span> <span class="p">{</span>
+  <span class="ss">:includes</span> <span class="p">[</span><span class="s">"resources/public/js/*.js"</span><span class="p">]</span>
+
+  <span class="c1">; This configuration is used by default</span>
+  <span class="ss">:config</span> <span class="p">{</span><span class="ss">:confusion</span>    <span class="nv">true</span>
+           <span class="ss">:continue</span>     <span class="nv">true</span>
+           <span class="ss">:css</span>          <span class="nv">true</span>
+           <span class="ss">:es5</span>          <span class="nv">true</span>
+           <span class="ss">:fragment</span>     <span class="nv">true</span>
+           <span class="ss">:regexp</span>       <span class="nv">true</span>
+           <span class="ss">:unparam</span>      <span class="nv">true</span>
+           <span class="ss">:vars</span>         <span class="nv">true</span>
+           <span class="ss">:validthis</span>    <span class="nv">true</span>
+           <span class="ss">:strict_mode</span>  <span class="nv">true</span><span class="p">}}</span>
+</pre></div>
+
+<p>Another example of configuration file: <a href="https://gist.github.com/irae/2764095">.jslintrc</a></p>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>Copyright © 2014 Vladislav Bauer</p>
+
+<p>Distributed under the Eclipse Public License, the same as Clojure.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/vbauer">vbauer</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
