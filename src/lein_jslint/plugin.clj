@@ -13,8 +13,9 @@
 ; External API: Hooks
 
 (defn compile-hook [task project & args]
-  (apply task project args)
-  (jslint/jslint project))
+  (let [res (apply task project args)]
+    (jslint/jslint project)
+    res))
 
 (defn activate []
   (npm/hooks)
