@@ -1,9 +1,9 @@
 lein-jslint
 ===========
 
-A Leiningen plugin for running javascript code through JSLint.
+[JSLint](https://github.com/reid/node-jslint) is a static code analysis tool used in software development for checking if JavaScript source code complies with coding rules.
 
-It helps to detect errors and potential problems in your JavaScript code and is based on [JSLint](https://github.com/reid/node-jslint).
+[lein-jslint](https://github.com/vbauer/lein-jslint) is a Leiningen plugin for running javascript code through JSLint.
 
 
 Pre-requirements
