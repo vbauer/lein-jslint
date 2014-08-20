@@ -121,7 +121,7 @@ Distributed under the Eclipse Public License, the same as Clojure.
 Thanks to
 =========
 
-[Douglas Crockford](http://www.crockford.com) for the great (JSLint)[https://github.com/douglascrockford/JSLint] project.
+[Douglas Crockford](http://www.crockford.com) for the great [JSLint](https://github.com/douglascrockford/JSLint) project.
 
 
 Might also like
