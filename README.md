@@ -110,14 +110,6 @@ Configuration example:
 Another example of configuration file: [.jslintrc](https://gist.github.com/irae/2764095)
 
 
-License
-=======
-
-Copyright © 2014 Vladislav Bauer
-
-Distributed under the Eclipse Public License, the same as Clojure.
-
-
 Thanks to
 =========
 
@@ -130,3 +122,11 @@ Might also like
 * [lein-asciidoc](https://github.com/vbauer/lein-asciidoc) - A Leiningen plugin for generating documentation using Asciidoctor.
 * [lein-jshint](https://github.com/vbauer/lein-jshint) - a Leiningen plugin for running javascript code through JSHint.
 * [lein-plantuml](https://github.com/vbauer/lein-plantuml) - a Leiningen plugin for generating UML diagrams using PluntUML.
+
+
+License
+=======
+
+Copyright © 2014 Vladislav Bauer
+
+Distributed under the Eclipse Public License, the same as Clojure.
