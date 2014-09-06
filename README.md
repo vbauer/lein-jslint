@@ -90,7 +90,13 @@ You can use both variants to specify keys: string values or keywords.
 
 All available parameters are described in the official documentation here: http://www.jslint.com/lint.html
 
-Configuration example:
+
+Examples
+========
+
+Detailed example
+----------------
+
 ```clojure
 :jslint {
   :includes ["resources/public/js/*.js"]
@@ -108,6 +114,12 @@ Configuration example:
            :strict_mode  true}}
 ```
 Another example of configuration file: [.jslintrc](https://gist.github.com/irae/2764095)
+
+
+Example project
+---------------
+
+Just clone the current repository and try to play with [example project](https://github.com/vbauer/lein-jslint/tree/master/example) for better understanding how to use lein-jslint.
 
 
 Thanks to
