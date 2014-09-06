@@ -4,6 +4,13 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :plugins [[lein-jslint "0.1.3"]]
 
+  ; List of plugins
+  :plugins [[lein-jslint "0.1.4"]]
+
+  ; List of hooks
+  ; It's used for running JSLint during compile phase
+  :hooks [lein-jslint.plugin]
+
+  ; JSLint configuration
   :jslint {:includes "resources/*.js"})

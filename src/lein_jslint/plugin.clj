@@ -39,7 +39,7 @@
 
 (defn compile-hook [task project & args]
   (let [res (apply task project args)]
-    (core/jslint project)
+    (core/jslint project args)
     res))
 
 (defn activate []
