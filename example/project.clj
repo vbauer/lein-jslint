@@ -4,6 +4,6 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :plugins [[lein-jslint "0.1.2"]]
+  :plugins [[lein-jslint "0.1.3"]]
 
-  :jslint {:includes ["resources/*.js"]})
+  :jslint {:includes "resources/*.js"})

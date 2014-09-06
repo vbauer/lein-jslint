@@ -11,8 +11,11 @@
 
 ; Internal API: Common
 
+(defn- to-coll [e]
+  (if (nil? e) [] (if (sequential? e) e [e])))
+
 (defn- find-files [patterns]
-  (map str (flatten (map glob/glob patterns))))
+  (map str (flatten (map glob/glob (to-coll patterns)))))
 
 (defn- create-tmp-file [file content]
   (doto (io/file file)
@@ -46,8 +49,8 @@
 
 (defn- config [project] (opt project :config {}))
 (defn- config-file [project] (opt project :config-file DEF_CONFIG_FILE))
-(defn- include-files [project] (find-files (vec (opt project :includes nil))))
-(defn- exclude-files [project] (find-files (vec (opt project :excludes nil))))
+(defn- include-files [project] (find-files (opt project :includes nil)))
+(defn- exclude-files [project] (find-files (opt project :excludes nil)))
 
 
 ; Internal API: Runner
