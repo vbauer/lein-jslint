@@ -5,6 +5,9 @@ lein-jslint
 
 [lein-jslint](https://github.com/vbauer/lein-jslint) is a Leiningen plugin for running javascript code through JSLint.
 
+[![Build Status](https://travis-ci.org/vbauer/lein-jslint.svg?branch=master)](https://travis-ci.org/vbauer/lein-jslint)
+[![Dependencies Status](http://jarkeeper.com/vbauer/lein-jslint/status.png)](http://jarkeeper.com/vbauer/lein-jslint)
+
 
 Pre-requirements
 ================
@@ -23,14 +26,6 @@ brew install node
 
 Installation
 ============
-
-
-To enable lein-jslint for your project, put the following in the :plugins vector of your project.clj file:
-
-![latest-version](https://clojars.org/lein-jslint/latest-version.svg)
-
-[![Build Status](https://travis-ci.org/vbauer/lein-jslint.svg?branch=master)](https://travis-ci.org/vbauer/lein-jslint)
-[![Dependencies Status](http://jarkeeper.com/vbauer/lein-jslint/status.png)](http://jarkeeper.com/vbauer/lein-jslint)
 
 Install [JSLint](https://www.npmjs.org/package/jslint) to use lein-jslint plugin. It could be done in few ways:
 
@@ -51,10 +46,13 @@ lein npm install
 lein deps
 ```
 
-To enable this plugin in compile stage, use the following hook:
-```clojure
-:hooks [lein-jslint.plugin]
-```
+
+Setup
+-----
+
+To enable lein-jslint for your project, put the following in the :plugins vector of your project.clj file:
+
+![latest-version](https://clojars.org/lein-jslint/latest-version.svg)
 
 
 Configuration
@@ -89,6 +87,15 @@ JSLint rules could be configured with *:config* parameter:
 You can use both variants to specify keys: string values or keywords.
 
 All available parameters are described in the official documentation here: http://www.jslint.com/lint.html
+
+
+Hooks
+-----
+
+To enable this plugin in compile stage, use the following hook:
+```clojure
+:hooks [lein-jslint.plugin]
+```
 
 
 Examples
