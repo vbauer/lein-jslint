@@ -9,6 +9,7 @@
             [clojure.java.io :as io]
             [clojure.string :as string]))
 
+
 ; Internal API: Common
 
 (defn- to-coll [e]
@@ -22,8 +23,13 @@
     (spit content)
     (.deleteOnExit)))
 
-(defn joine [& data]
-  (string/join "\r\n" data))
+(defn- error [ex]
+  (println
+   (string/join "\r\n"
+                (str "Can't execute JSLint: " (.getMessage ex))
+                "Something is wrong:"
+                " - installation: npm install jslint -g"
+                " - configuration: https://github.com/vbauer/lein-jslint")))
 
 
 ; Internal API: Configuration
@@ -85,9 +91,5 @@
         (npm/with-json-file file content project
                             (apply invoke project sources))))
     (catch Throwable t
-      (println
-       (joine (str "Can't execute JSLint: " (.getMessage t))
-              "Something is wrong:"
-              " - installation: npm install jslint -g"
-              " - configuration: https://github.com/vbauer/lein-jslint"))
+      (error t)
       (main/abort))))
