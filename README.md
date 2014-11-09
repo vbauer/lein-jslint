@@ -77,6 +77,7 @@ JSLint rules could be configured with *:config* parameter:
 ```clojure
 ; It specifies which JSLint options to turn on or off
 :jslint {
+  :debug true ; To debug processing
   :config {:predef {"angular" "console" "$"}
            :nomen true
            :es5 true
