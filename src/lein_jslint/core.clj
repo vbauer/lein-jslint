@@ -76,7 +76,7 @@
     (remove (fn [x] (or (empty? x)
                         (contains? excludes x))) sources)))
 
-(defn- invoke [project & args]
+(defn- invoke [project args]
   (let [root (:root project)
         local (str DEF_JSLINT_DIR DEF_JSLINT_CMD)
         cmd (if (.exists (io/file local)) local DEF_JSLINT_CMD)]
@@ -90,10 +90,12 @@
     (npm/environmental-consistency project)
     (let [file (config-file project)
           content (generate-config-file project)
-          sources (sources-list project)]
+          sources (sources-list project)
+          arguments (if (empty? args) [] (vec args))
+          params (apply concat sources arguments)]
       (if-not (empty? sources)
         (npm/with-json-file file content project
-                            (apply invoke project sources))))
+                            (invoke project params))))
     (catch Throwable t
       (error t (debug project))
       (main/abort))))

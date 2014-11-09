@@ -20,4 +20,5 @@
 ; Tests
 
 (fact "Check JSLint processor"
-  (nil? (jslint DEF_CONFIG)) => false)
+  (nil? (jslint DEF_CONFIG)) => false
+  (nil? (jslint DEF_CONFIG ["--ass"])) => false)
