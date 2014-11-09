@@ -23,18 +23,22 @@
     (spit content)
     (.deleteOnExit)))
 
-(defn- error [ex]
+(defn joine [& data]
+  (string/join "\r\n" data))
+
+(defn- error [ex dbg]
+  (if dbg (.printStackTrace ex))
   (println
-   (string/join "\r\n"
-                (str "Can't execute JSLint: " (.getMessage ex))
-                "Something is wrong:"
-                " - installation: npm install jslint -g"
-                " - configuration: https://github.com/vbauer/lein-jslint")))
+   (joine "\r\n"
+          (str "Can't execute JSLint: " (.getMessage ex))
+          "Something is wrong:"
+          " - installation: npm install jslint -g"
+          " - configuration: https://github.com/vbauer/lein-jslint")))
 
 
 ; Internal API: Configuration
 
-(def ^:public DEF_JSLINT_CMD "jshint")
+(def ^:public DEF_JSLINT_CMD "jslint")
 
 (def ^:private DEF_JSLINT_DIR "node_modules/jslint/bin/")
 (def ^:private DEF_CONFIG_FILE ".jslintrc")
@@ -54,6 +58,7 @@
 (defn- opt [project k v] (get-in project [:jslint k] v))
 
 (defn- config [project] (opt project :config {}))
+(defn- debug [project] (opt project :debug false))
 (defn- config-file [project] (opt project :config-file DEF_CONFIG_FILE))
 (defn- include-files [project] (find-files (opt project :includes nil)))
 (defn- exclude-files [project] (find-files (opt project :excludes nil)))
@@ -65,9 +70,8 @@
   (json/generate-string
    (merge (config project) DEF_CONFIG)))
 
-(defn- sources-list [project args]
-  (let [includes (include-files project)
-        sources (remove empty? (concat (apply vec args) includes))
+(defn- sources-list [project]
+  (let [sources (include-files project)
         excludes (apply hash-set (exclude-files project))]
     (remove (fn [x] (or (empty? x)
                         (contains? excludes x))) sources)))
@@ -86,10 +90,10 @@
     (npm/environmental-consistency project)
     (let [file (config-file project)
           content (generate-config-file project)
-          sources (sources-list project args)]
+          sources (sources-list project)]
       (if-not (empty? sources)
         (npm/with-json-file file content project
                             (apply invoke project sources))))
     (catch Throwable t
-      (error t)
+      (error t (debug project))
       (main/abort))))
