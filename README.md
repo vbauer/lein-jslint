@@ -14,14 +14,8 @@ Pre-requirements
 
 Install [NodeJS](http://nodejs.org/) and [NPM](https://github.com/npm/npm) (package manager for Node) to install JSHint:
 
-On Ubuntu:
-```
-sudo apt-get install nodejs
-```
-On Mac OS X:
-```
-brew install node
-```
+- On Ubuntu: `sudo apt-get install nodejs`
+- On Mac OS X: `brew install node`
 
 
 Installation
@@ -29,22 +23,10 @@ Installation
 
 Install [JSLint](https://www.npmjs.org/package/jslint) to use lein-jslint plugin. It could be done in few ways:
 
-- Use NPM to install JSLint globally:
-```
-npm install jslint -g
-```
-- You can also install JSLint in the current directory:
-```
-npm install jslint
-```
-- Use [lein-npm](https://github.com/bodil/lein-npm) plugin:
-```
-lein npm install
-```
-- Use just Leiningen:
-```
-lein deps
-```
+- Use NPM to install JSLint globally: `npm install jslint -g`
+- You can also install JSLint in the current directory: `npm install jslint`
+- Use [lein-npm](https://github.com/bodil/lein-npm) plugin: `lein npm install`
+- Use just Leiningen: `lein deps`
 
 
 Setup
