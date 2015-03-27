@@ -7,7 +7,6 @@
             [me.raynes.fs :as fs]
             [citizen.os :as os]
             [cheshire.core :as json]
-            [org.satta.glob :as glob]
             [clojure.string :as string]))
 
 
