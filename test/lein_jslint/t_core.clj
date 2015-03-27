@@ -14,7 +14,7 @@
 (def ^:private DEF_CONFIG
   {:jslint
     {:debug true
-     :includes "example/resources/*.js"}})
+     :includes ["example/resources/*.js"]}})
 
 
 ; Tests

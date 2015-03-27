@@ -4,22 +4,27 @@
             [leiningen.npm.process :as process]
             [leiningen.core.main :as main]
             [leiningen.compile]
+            [me.raynes.fs :as fs]
+            [citizen.os :as os]
             [cheshire.core :as json]
             [org.satta.glob :as glob]
-            [clojure.java.io :as io]
             [clojure.string :as string]))
 
 
 ; Internal API: Common
 
-(defn- to-coll [e]
-  (if (nil? e) [] (if (sequential? e) e [e])))
+(defn- abs-path [f] (.getAbsolutePath f))
 
-(defn- find-files [patterns]
-  (map str (flatten (map glob/glob (to-coll patterns)))))
+(defn- clean-path [p]
+  (if os/windows?
+    (string/replace p "/" "\\")
+    (string/replace p "\\" "/")))
+
+(defn- scan-files [patterns]
+  (set (mapcat fs/glob (map clean-path patterns))))
 
 (defn- create-tmp-file [file content]
-  (doto (io/file file)
+  (doto (fs/file file)
     (spit content)
     (.deleteOnExit)))
 
@@ -60,8 +65,8 @@
 (defn- config [project] (opt project :config {}))
 (defn- debug [project] (opt project :debug false))
 (defn- config-file [project] (opt project :config-file DEF_CONFIG_FILE))
-(defn- include-files [project] (find-files (opt project :includes nil)))
-(defn- exclude-files [project] (find-files (opt project :excludes nil)))
+(defn- include-files [project] (scan-files (opt project :includes nil)))
+(defn- exclude-files [project] (scan-files (opt project :excludes nil)))
 
 
 ; Internal API: Runner
@@ -70,16 +75,19 @@
   (json/generate-string
    (merge (config project) DEF_CONFIG)))
 
-(defn- sources-list [project]
-  (let [sources (include-files project)
-        excludes (apply hash-set (exclude-files project))]
-    (remove (fn [x] (or (empty? x)
-                        (contains? excludes x))) sources)))
+(defn- source-list [project]
+  (let [src (include-files project)
+        ex (exclude-files project)
+        sources (remove (fn [s] (some #(.compareTo % s) ex)) src)]
+    (if (empty? sources)
+      (throw (RuntimeException.
+              "Source list is empty. Check parameters :sources & :excludes"))
+      (map abs-path sources))))
 
 (defn- invoke [project args]
   (let [root (:root project)
         local (str DEF_JSLINT_DIR DEF_JSLINT_CMD)
-        cmd (if (.exists (io/file local)) local DEF_JSLINT_CMD)]
+        cmd (if (.exists (fs/file local)) local DEF_JSLINT_CMD)]
     (process/exec root (cons cmd args))))
 
 
@@ -90,12 +98,10 @@
     (npm/environmental-consistency project)
     (let [file (config-file project)
           content (generate-config-file project)
-          sources (sources-list project)
-          arguments (if (empty? args) [] (vec args))
-          params (apply concat sources arguments)]
+          sources (source-list project)]
       (if-not (empty? sources)
         (npm/with-json-file file content project
-                            (invoke project params))))
+                            (invoke project sources))))
     (catch Throwable t
       (error t (debug project))
       (main/abort))))
