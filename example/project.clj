@@ -6,7 +6,7 @@
 
 
   ; List of plugins
-  :plugins [[lein-jslint "0.1.8-SNAPSHOT"]]
+  :plugins [[lein-jslint "0.1.9"]]
 
   ; List of hooks
   ; It's used for running JSLint during compile phase
