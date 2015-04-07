@@ -5,7 +5,6 @@
             [leiningen.core.main :as main]
             [leiningen.compile]
             [me.raynes.fs :as fs]
-            [citizen.os :as os]
             [cheshire.core :as json]
             [clojure.string :as string]))
 
@@ -15,9 +14,10 @@
 (defn- abs-path [f] (.getAbsolutePath f))
 
 (defn- clean-path [p]
-  (if os/windows?
-    (string/replace p "/" "\\")
-    (string/replace p "\\" "/")))
+  (if (not (nil? p))
+    (if (.startsWith (System/getProperty "os.name") "Windows")
+      (string/replace p "/" "\\")
+      (string/replace p "\\" "/"))))
 
 (defn- scan-files [patterns]
   (set (mapcat fs/glob (map clean-path patterns))))
