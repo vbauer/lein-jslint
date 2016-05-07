@@ -9,7 +9,7 @@
 ; Internal API: Configuration
 
 (def ^:private DEF_JSLINT_DEP "jslint")
-(def ^:private DEF_JSLINT_VER ">=0.7.3")
+(def ^:private DEF_JSLINT_VER ">=0.9.6")
 
 
 ; Internal API: Middlewares

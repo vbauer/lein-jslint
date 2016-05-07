@@ -6,6 +6,7 @@
             [leiningen.compile]
             [me.raynes.fs :as fs]
             [cheshire.core :as json]
+            [clojure.java.io :as io]
             [clojure.string :as string]))
 
 
@@ -22,11 +23,6 @@
 (defn- scan-files [patterns]
   (set (mapcat fs/glob (map clean-path patterns))))
 
-(defn- create-tmp-file [file content]
-  (doto (fs/file file)
-    (spit content)
-    (.deleteOnExit)))
-
 (defn joine [& data]
   (string/join "\r\n" data))
 
@@ -38,6 +34,37 @@
           "Something is wrong:"
           " - installation: npm install jslint -g"
           " - configuration: https://github.com/vbauer/lein-jslint")))
+
+(defn- root [project]
+  (if-let [root (project :npm-root)]
+    (if (keyword? root)
+      (project root) ;; e.g. support using :target-path
+      root)
+    (project :root)))
+
+; Internal API: JSON
+
+(defn- json-file
+  [filename project]
+  (io/file (root project) filename))
+
+(defn write-json-file
+  [filename content project]
+  (doto (json-file filename project)
+    (spit content)
+    (.deleteOnExit)))
+
+(defn remove-json-file
+  [filename project]
+  (.delete (json-file filename project)))
+
+(defmacro with-json-file
+  [filename content project & forms]
+  `(try
+     (write-json-file ~filename ~content ~project)
+     ~@forms
+     (finally (remove-json-file ~filename ~project))))
+
 
 
 ; Internal API: Configuration
@@ -99,7 +126,7 @@
           content (generate-config-file project)
           sources (source-list project)]
       (if-not (empty? sources)
-        (npm/with-json-file file content project
+        (with-json-file file content project
                             (invoke project sources))))
     (catch Throwable t
       (error t (debug project))
