@@ -76,14 +76,9 @@
 (def ^:private DEF_CONFIG
   {:confusion    true
    :continue     true
-   :css          true
-   :es5          true
-   :fragment     true
    :regexp       true
    :unparam      true
-   :vars         true
-   :validthis    true
-   :strict_mode  true})
+   :vars         true})
 
 
 (defn- opt [project k v] (get-in project [:jslint k] v))
