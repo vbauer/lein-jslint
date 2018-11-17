@@ -1,24 +1,20 @@
 (ns ^{:author "Vladislav Bauer"}
   lein-jslint.t-core
-  (:use [midje.sweet :only [fact]]
-        [midje.util :only [testable-privates]])
-  (:require [lein-jslint.core]))
+  (:require [lein-jslint.core :as core]
+            [clojure.test :as t]))
 
 
 ; Configurations
-
-(testable-privates
-  lein-jslint.core
-    jslint)
 
 (def ^:private DEF_CONFIG
   {:jslint
     {:debug true
      :includes ["example/resources/*.js"]}})
 
+(def ^:private not-nil? (complement nil?))
 
 ; Tests
 
-(fact "Check JSLint processor"
-  (nil? (jslint DEF_CONFIG)) => false
-  (nil? (jslint DEF_CONFIG ["--ass"])) => false)
+(t/deftest check-jslint-processor
+  (t/is (not-nil? (core/jslint DEF_CONFIG)))
+  (t/is (not-nil? (core/jslint DEF_CONFIG ["--ass"]))))

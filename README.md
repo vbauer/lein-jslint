@@ -112,6 +112,16 @@ Example project
 Just clone the current repository and try to play with [example project](https://github.com/vbauer/lein-jslint/tree/master/example) for better understanding how to use lein-jslint.
 
 
+Unit testing
+============
+
+To run unit tests:
+
+```bash
+lein test
+```
+
+
 Thanks to
 =========
 
