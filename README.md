@@ -6,7 +6,7 @@ lein-jslint
 [lein-jslint](https://github.com/vbauer/lein-jslint) is a Leiningen plugin for running javascript code through JSLint.
 
 [![Build Status](https://travis-ci.org/vbauer/lein-jslint.svg?branch=master)](https://travis-ci.org/vbauer/lein-jslint)
-[![Dependencies Status](http://jarkeeper.com/vbauer/lein-jslint/status.png)](http://jarkeeper.com/vbauer/lein-jslint)
+[![Clojars Project](https://img.shields.io/clojars/v/lein-jslint.svg)](https://clojars.org/lein-jslint)
 
 
 Pre-requirements
@@ -34,7 +34,10 @@ Setup
 
 To enable lein-jslint for your project, put the following in the :plugins vector of your project.clj file:
 
-![latest-version](https://clojars.org/lein-jslint/latest-version.svg)
+```clojure
+; Use latest version instead of "X.X.X"
+:plugins [[lein-jslint "X.X.X"]]
+```
 
 
 Configuration
