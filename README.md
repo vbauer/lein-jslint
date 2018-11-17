@@ -65,14 +65,13 @@ JSLint rules could be configured with *:config* parameter:
   :debug true ; To debug processing
   :config {:predef {"angular" "console" "$"}
            :nomen true
-           :es5 true
            :eqeq true
            ...}}
 ```
 
 You can use both variants to specify keys: string values or keywords.
 
-All available parameters are described in the official documentation here: http://www.jslint.com/lint.html
+All available parameters are described in the official documentation [here](https://github.com/reid/node-jslint/blob/master/doc/jslint.md)
 
 
 Hooks
@@ -97,14 +96,9 @@ Detailed example
   ; This configuration is used by default
   :config {:confusion    true
            :continue     true
-           :css          true
-           :es5          true
-           :fragment     true
            :regexp       true
            :unparam      true
-           :vars         true
-           :validthis    true
-           :strict_mode  true}}
+           :vars         true}}
 ```
 Another example of configuration file: [.jslintrc](https://gist.github.com/irae/2764095)
 
